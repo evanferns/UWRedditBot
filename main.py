@@ -1,13 +1,14 @@
+import re
 import os
 import pandas
 import praw
 from prawcore.exceptions import ResponseException
 
 reddit=praw.Reddit(
-  client_id='',
-  client_secret='',
-  username='',
-  password='',
+  client_id='FdlvIsI5Qz2trQ',
+  client_secret='b23eoIyNFrPEOzXlBQ0NRHthUb1nqA',
+  username='enghacks-bot-2222',
+  password='enghacks',
   user_agent= "<UWBot1.0>"
 )
 try:
@@ -44,20 +45,20 @@ for course in df["description"]:
     
    else:
      break
-  
-print(courseDesc['ECE 192'])
-
-
-
 
 for comment in subreddit.stream.comments(skip_existing=True):
 
+  result = re.sub("[A-Za-z]+", lambda ele: " " + ele[0] + " ", comment.body)
+  result = result.upper()
+  result=result.strip()
+
   TmpCourse = ""
   print(commentID)
-  print(comment.body)
+  print(result)
+  print(len(result))
   IsThere = False
   for course in courses: 
-    if course == comment.body.toupper:
+    if course == result:
       IsThere = True
       TmpCourse = course
       break
@@ -67,11 +68,5 @@ for comment in subreddit.stream.comments(skip_existing=True):
       commentID.append(comment.id)
       print("I have replied")
     elif (IsThere == False):
-      comment.reply("Course not found")
+      comment.reply("Course not found, for information on the courses offered at UWaterloo, use this: ecampusontario.ca/?itemTypes=1&itemTypes=2&itemTypes=3&sourceWebsiteTypes=2&institutions=426&sortCol")
       commentID.append(comment.id)
-
-
-
-
-
-
