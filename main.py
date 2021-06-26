@@ -57,7 +57,7 @@ for comment in subreddit.stream.comments(skip_existing=True):
   print(comment.body)
   IsThere = False
   for course in courses: 
-    if course == comment.body:
+    if course == comment.body.toupper:
       IsThere = True
       TmpCourse = course
       break
