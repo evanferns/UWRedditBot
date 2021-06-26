@@ -5,10 +5,6 @@ import praw
 from prawcore.exceptions import ResponseException
 
 reddit=praw.Reddit(
-  client_id='FdlvIsI5Qz2trQ',
-  client_secret='b23eoIyNFrPEOzXlBQ0NRHthUb1nqA',
-  username='enghacks-bot-2222',
-  password='enghacks',
   user_agent= "<UWBot1.0>"
 )
 try:
