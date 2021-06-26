@@ -4,10 +4,10 @@ import praw
 from prawcore.exceptions import ResponseException
 
 reddit=praw.Reddit(
-  client_id='',
-  client_secret='',
-  username='',
-  password='',
+  client_id='FdlvIsI5Qz2trQ',
+  client_secret='b23eoIyNFrPEOzXlBQ0NRHthUb1nqA',
+  username='enghacks-bot-2222',
+  password='enghacks',
   user_agent= "<UWBot1.0>"
 )
 try:
@@ -24,6 +24,7 @@ df= pandas.read_csv('Merged.csv')
 courses=[]
 courseCode=[]
 courseDesc={}
+commentID=[]
 
 for course in df["subjectCode"]:
    courses.append(course)
@@ -48,13 +49,26 @@ print(courseDesc['ECE 192'])
 
 
 
+
 for comment in subreddit.stream.comments(skip_existing=True):
 
+  TmpCourse = ""
+  print(commentID)
   print(comment.body)
+  IsThere = False
   for course in courses: 
-    if course==comment.body:
-     comment.reply(courseDesc[course])
-     print("I have replied")
+    if course == comment.body:
+      IsThere = True
+      TmpCourse = course
+      break
+  if comment.id not in commentID and not comment.author == reddit.user.me():
+    if (IsThere == True):
+      comment.reply(courseDesc[TmpCourse])
+      commentID.append(comment.id)
+      print("I have replied")
+    elif (IsThere == False):
+      comment.reply("Course not found")
+      commentID.append(comment.id)
 
 
 
